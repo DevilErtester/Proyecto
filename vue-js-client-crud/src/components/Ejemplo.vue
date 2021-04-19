@@ -8,12 +8,13 @@
 </template>
 
 <script>
+import EjemploDataService from "../services/EjemploDataService";
+
 export default {
   name: "Ejemplo",
   methods: {
     clickMe() {
-      if (this.message == "ajaj") this.message = "klk";
-      else this.message = "ajaj";
+      EjemploDataService.clickMe();
     },
   },
   data() {

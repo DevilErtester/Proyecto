@@ -20,6 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 require("./app/routes/tutorial.routes.js")(app);
+require("./app/routes/Ejemplo.routes.js")(app);
 
 // set port, listen for requests
 
