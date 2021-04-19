@@ -43,7 +43,7 @@
           <label><strong>Status:</strong></label> {{ currentTutorial.published ? "Published" : "Pending" }}
         </div>
 
-        <a class="badge badge-warning"
+        <a class="badge bg-danger"
           :href="'/tutorials/' + currentTutorial.id"
         >
           Edit
