@@ -2,10 +2,16 @@
   <div class="list row">
     <div class="col-md-8">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Search by title"
-          v-model="title"/>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by title"
+          v-model="title"
+        />
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button"
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
             @click="searchTitle"
           >
             Search
@@ -16,7 +22,8 @@
     <div class="col-md-6">
       <h4>Tutorials List</h4>
       <ul class="list-group">
-        <li class="list-group-item"
+        <li
+          class="list-group-item"
           :class="{ active: index == currentIndex }"
           v-for="(tutorial, index) in tutorials"
           :key="index"
@@ -37,15 +44,15 @@
           <label><strong>Title:</strong></label> {{ currentTutorial.title }}
         </div>
         <div>
-          <label><strong>Description:</strong></label> {{ currentTutorial.description }}
+          <label><strong>Description:</strong></label>
+          {{ currentTutorial.description }}
         </div>
         <div>
-          <label><strong>Status:</strong></label> {{ currentTutorial.published ? "Published" : "Pending" }}
+          <label><strong>Status:</strong></label>
+          {{ currentTutorial.published ? "Published" : "Pending" }}
         </div>
 
-        <a class="badge bg-danger"
-          :href="'/tutorials/' + currentTutorial.id"
-        >
+        <a class="badge bg-danger" :href="'/tutorials/' + currentTutorial.id">
           Edit
         </a>
       </div>
@@ -67,17 +74,17 @@ export default {
       tutorials: [],
       currentTutorial: null,
       currentIndex: -1,
-      title: ""
+      title: "",
     };
   },
   methods: {
     retrieveTutorials() {
       TutorialDataService.getAll()
-        .then(response => {
+        .then((response) => {
           this.tutorials = response.data;
           console.log(response.data);
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
@@ -95,29 +102,29 @@ export default {
 
     removeAllTutorials() {
       TutorialDataService.deleteAll()
-        .then(response => {
+        .then((response) => {
           console.log(response.data);
           this.refreshList();
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
-    
+
     searchTitle() {
       TutorialDataService.findByTitle(this.title)
-        .then(response => {
+        .then((response) => {
           this.tutorials = response.data;
           console.log(response.data);
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
-    }
+    },
   },
   mounted() {
     this.retrieveTutorials();
-  }
+  },
 };
 </script>
 

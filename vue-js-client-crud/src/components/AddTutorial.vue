@@ -45,34 +45,34 @@ export default {
         id: null,
         title: "",
         description: "",
-        published: false
+        published: false,
       },
-      submitted: false
+      submitted: false,
     };
   },
   methods: {
     saveTutorial() {
       var data = {
         title: this.tutorial.title,
-        description: this.tutorial.description
+        description: this.tutorial.description,
       };
 
       TutorialDataService.create(data)
-        .then(response => {
+        .then((response) => {
           this.tutorial.id = response.data.id;
           console.log(response.data);
           this.submitted = true;
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
-    
+
     newTutorial() {
       this.submitted = false;
       this.tutorial = {};
-    }
-  }
+    },
+  },
 };
 </script>
 
