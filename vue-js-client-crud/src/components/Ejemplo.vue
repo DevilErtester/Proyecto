@@ -14,7 +14,12 @@ export default {
   name: "Ejemplo",
   methods: {
     clickMe() {
-      EjemploDataService.clickMe();
+      var data = {
+        message: this.message,
+      }
+      EjemploDataService.clickMe(data).then((response=>{
+        this.message=response.data.message;
+      }));
     },
   },
   data() {

@@ -1,8 +1,8 @@
 import http from "../http-common";
 
 class EjemploDataService {
-    clickMe() {
-        return http.post(`/ejemplo`);
+    clickMe(msg) {
+        return http.post(`/ejemplo`,msg);
     }
 
 }
