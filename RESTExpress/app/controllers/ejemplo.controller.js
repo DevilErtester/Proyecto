@@ -1,10 +1,7 @@
 exports.ChangeMsg = (req, res) => {
-    var message="";
+    var message="jajaja";
     if (req.body.message==="jajaja"){
         message="klk";  
-    }
-    else{
-        message="jajaja"
     }
     res.send({
         message: message,
