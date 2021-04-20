@@ -3,8 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 
-const jwt = require('jsonwebtoken');
-require('crypto').randomBytes(64).toString('hex')
+
 
 const dotenv = require('dotenv');
 
@@ -34,6 +33,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 require("./app/routes/tutorial.routes.js")(app);
 require("./app/routes/Ejemplo.routes.js")(app);
+require("./app/routes/login.routes.js")(app);
 
 // set port, listen for requests
 

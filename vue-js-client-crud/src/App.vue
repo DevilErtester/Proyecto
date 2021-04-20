@@ -12,6 +12,9 @@
         <li class="nav-item">
           <router-link to="/Ejemplo" class="nav-link">Ejemplo</router-link>
         </li>
+        <li class="nav-item">
+          <router-link to="/login" class="nav-link">Login</router-link>
+        </li>
       </div>
     </nav>
 

@@ -23,10 +23,15 @@ export default new Router({
       component: () => import("./components/Ejemplo")
     },
     {
+      path: "/login",
+      name: "Login",
+      component: () => import("./components/Login")
+    },
+    {
       path: "/add",
       name: "add",
       component: () => import("./components/AddTutorial")
     }
-    
+
   ]
 });
