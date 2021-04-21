@@ -28,6 +28,11 @@ export default new Router({
       component: () => import("./components/Login")
     },
     {
+      path: "/Signup",
+      name: "Signup",
+      component: () => import("./components/Signup")
+    },
+    {
       path: "/add",
       name: "add",
       component: () => import("./components/AddTutorial")

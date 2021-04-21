@@ -4,6 +4,9 @@ class LoginDataService {
     clickMe(data) {
         return http.post(`/login`, data);
     }
+    newUser(data) {
+        return http.post(`/newUser`, data);
+    }
 
 }
 

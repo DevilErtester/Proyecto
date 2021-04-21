@@ -25,17 +25,20 @@
             name="pass"
           />
         </div>
-
-        <button @click="clickMe" class="btn btn-success">login</button>
+        {{ login.message }}
+        <button @click="clickMe" class="btn btn-success">Sign In</button>
+        <a></a>
+        <router-link to="/Signup" class="btn btn-success">Signup</router-link>
       </div>
-      {{ login.message }}
+      
     </div>
   </div>
 </template>
 
 <script>
 import LoginDataService from "../services/LoginDataService";
-
+import router from '../router'
+import md5 from 'js-md5'
 export default {
   name: "Login",
   data() {
@@ -52,10 +55,13 @@ export default {
     clickMe() {
       var data = {
         user: this.login.user,
-        pass: this.login.pass,
+        pass: md5(this.login.pass),
       };
       LoginDataService.clickMe(data).then((response) => {
-        this.login.message = response;
+        if(response.data.success===true) {
+          router.push("/");
+        }
+        else this.login.message="wrong password or username";
       });
     },
   },

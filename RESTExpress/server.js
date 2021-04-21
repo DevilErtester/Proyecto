@@ -34,6 +34,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 require("./app/routes/tutorial.routes.js")(app);
 require("./app/routes/Ejemplo.routes.js")(app);
 require("./app/routes/login.routes.js")(app);
+require("./app/routes/signup.routes.js")(app);
+
 
 // set port, listen for requests
 

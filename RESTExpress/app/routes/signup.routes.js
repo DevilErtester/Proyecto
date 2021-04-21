@@ -3,9 +3,7 @@ module.exports = app => {
 
     var router = require("express").Router();
 
-    router.post("/", Login.login);
+    router.post("/", Login.newUser);
 
-    router.post("/verify", Login.verifyLogin);
-
-    app.use('/api/login', router);
+    app.use('/api/newUser', router);
 };
