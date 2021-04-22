@@ -30,7 +30,6 @@
         <a></a>
         <router-link to="/Signup" class="btn btn-success">Signup</router-link>
       </div>
-      
     </div>
   </div>
 </template>

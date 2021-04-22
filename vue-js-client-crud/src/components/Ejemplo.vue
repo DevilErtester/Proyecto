@@ -9,9 +9,21 @@
 
 <script>
 import EjemploDataService from "../services/EjemploDataService";
+import LoginDataService from "../services/LoginDataService";
+import router from '../router'
+
 
 export default {
+  
   name: "Ejemplo",
+  created(){
+    LoginDataService.verifyLogin().then((response=>{
+      if(response.status===401){
+        alert(response.body.message);
+        router.push('/login');
+      }
+    }))
+  },
   methods: {
     clickMe() {
       var data = {

@@ -5,7 +5,7 @@ module.exports = app => {
 
     router.post("/", Login.login);
 
-    router.post("/verify", Login.verifyLogin);
+    router.post("/verifyLogin", Login.verifyLogin);
 
     app.use('/api/login', router);
 };

@@ -37,8 +37,7 @@ exports.newUser = (req, res, next) => {
         password: req.body.pass     
       })
     .then(data => {
-        res.status(200).json({ success: true })
-        res.send(data);
+        res.status(200).json({ success: true, data:data })
     })
     .catch(err => {
         res.status(200).json({ success: false,
@@ -47,18 +46,17 @@ exports.newUser = (req, res, next) => {
     });
 };
 
-exports.verifyLogin = (req, res, next) =>
+exports.verifyLogin = (req, res) =>
 {
   var cookie = req.cookies.sessionCookie;
-  try
-  {
-    verifyToken(cookie)
-    next()
-  }
-  catch (err)
-  {
+  
+  if(!verifyToken(cookie)){
     const status = 401
     const message = 'Unauthorized'
-    res.status(status).json({ status, message })
-  } 
+    return res.status(status).json({ status, message })
+  }
+  
+  res.status(200).send();
+  console.log(cookie);
+
 };
