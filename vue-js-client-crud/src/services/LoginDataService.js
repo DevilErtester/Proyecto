@@ -11,6 +11,10 @@ class LoginDataService {
         return http.post(`/verifyLogin`);
     }
 
+    async getHello(){
+        return http.get('/info');
+    }
+
 }
 
 export default new LoginDataService();
