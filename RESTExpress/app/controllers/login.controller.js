@@ -5,15 +5,15 @@ const Op = db.Sequelize.Op;
 const jwt = require('jsonwebtoken');
 
 function generateAccessToken(username) {
-    return jwt.sign({ username }, process.env.TOKEN_SECRET, {
+    return jwt.sign({ username, roles: ['ADMINISTRATOR', 'USER'] }, process.env.TOKEN_SECRET, {
 
-        expiresIn: '24h'
+        expiresIn: '30d'
 
     });
 }
 function verifyToken(token)
 {
-  return jwt.verify(token, SECRET_KEY)
+  return jwt.verify(token, process.env.TOKEN_SECRET)
 }
 
 exports.login = (req, res, next) => {
@@ -24,8 +24,7 @@ exports.login = (req, res, next) => {
       }).then(users =>{
         if (users) {
             const token = generateAccessToken(req.body.user);
-            res.cookie('sessionCookie', token, {httpOnly: true})
-            res.status(200).json({ success: true })
+            return res.cookie('jwt', token, {httpOnly: true, sameSite: true, maxAge: 1000 * 86400 * 30}).json({success: true});
         }else{
             res.status(200).json({success:false})
         }
