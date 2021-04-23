@@ -1,6 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
+
 
 
 
@@ -11,7 +13,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 // access config var
-process.env.TOKEN_SECRET;
+console.log(process.env.TOKEN_SECRET);
 
 
 const app = express();
@@ -24,6 +26,7 @@ var corsOptions = {
   credentials: true
 };
 
+app.use(cookieParser());
 app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
@@ -42,7 +45,7 @@ app.use('/api', loginRouter);
 app.use('/api', ejemploRouter);
 
 
-// require("./app/routes/tutorial.routes.js")(app);
+require("./app/routes/tutorial.routes.js")(app);
 
 // // require("./app/routes/login.routes.js")(app);
 // require("./app/routes/signup.routes.js")(app);
@@ -60,4 +63,3 @@ app.use(function (err, req, res, next) {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
-

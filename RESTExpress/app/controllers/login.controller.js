@@ -1,8 +1,9 @@
 const db = require("../models");
 const Login = db.users;
 const Op = db.Sequelize.Op;
-
 const jwt = require('jsonwebtoken');
+
+
 
 function generateAccessToken(username) {
     return jwt.sign({ username, roles: ['ADMINISTRATOR', 'USER'] }, process.env.TOKEN_SECRET, {
@@ -18,8 +19,9 @@ function verifyToken(token)
 
 exports.login = (req, res, next) => {
     Login.findOne({
-        where: {username: req.body.user,
-                password: req.body.pass 
+        where: {
+              username: req.body.user,
+              password: req.body.pass 
             }
       }).then(users =>{
         if (users) {
@@ -45,17 +47,13 @@ exports.newUser = (req, res, next) => {
     });
 };
 
-exports.verifyLogin = (req, res) =>
+exports.verifyLogin = (req, res, next) =>
 {
-  var cookie = req.cookies.sessionCookie;
-  
-  if(!verifyToken(cookie)){
+  var cookie = req.cookies.jwt || null;
+  if(cookie==null || !verifyToken(cookie) ){
     const status = 401
     const message = 'Unauthorized'
     return res.status(status).json({ status, message })
   }
-  
-  res.status(200).send();
-  console.log(cookie);
-
+  return next();
 };

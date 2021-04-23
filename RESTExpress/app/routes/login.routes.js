@@ -17,27 +17,27 @@ const Login = require("../controllers/login.controller.js");
 
 
 
-router.get('/info', (req, res, next) => {
+// router.get('/info', (req, res, next) => {
 
-    // Hi ha una excepcio
+//     // Hi ha una excepcio
 
-    if(req.hasOwnProperty('usuario') && req.usuario === 'Mariolo'){
-        return res.json({hello: true});
-    }
+//     if(req.hasOwnProperty('usuario') && req.usuario === 'Mariolo'){
+//         return res.json({hello: true});
+//     }
 
-    const error = new Error('Ets un imbecil');
-    error.status = 400;
-    return next(error);
+//     const error = new Error('Ets un imbecil');
+//     error.status = 400;
+//     return next(error);
 
     
-  });
+//   });
 
-router.use('*', (req, res, next) => {
-    console.log('Hola mario, soc el middleware');
-    req.usuario = 'Mariolo';
+// router.use('*', (req, res, next) => {
+//     console.log('Hola mario, soc el middleware');
+//     req.usuario = 'Mariolo';
 
-    return next();
-});
+//     return next();
+// });
   
 router.post("/login", Login.login);
 router.post("/verifyLogin", Login.verifyLogin);
