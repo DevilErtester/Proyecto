@@ -1,31 +1,32 @@
 const db = require("../models");
 const Login = db.users;
 const Op = db.Sequelize.Op;
-
 const jwt = require('jsonwebtoken');
 
-function generateAccessToken(username) {
-    return jwt.sign({ username }, process.env.TOKEN_SECRET, {
 
-        expiresIn: '24h'
+
+function generateAccessToken(username) {
+    return jwt.sign({ username, roles: ['ADMINISTRATOR', 'USER'] }, process.env.TOKEN_SECRET, {
+
+        expiresIn: '30d'
 
     });
 }
 function verifyToken(token)
 {
-  return jwt.verify(token, SECRET_KEY)
+  return jwt.verify(token, process.env.TOKEN_SECRET)
 }
 
 exports.login = (req, res, next) => {
     Login.findOne({
-        where: {username: req.body.user,
-                password: req.body.pass 
+        where: {
+              username: req.body.user,
+              password: req.body.pass 
             }
       }).then(users =>{
         if (users) {
             const token = generateAccessToken(req.body.user);
-            res.cookie('sessionCookie', token, {httpOnly: true})
-            res.status(200).json({ success: true })
+            return res.cookie('jwt', token, {httpOnly: true, sameSite: true, maxAge: 1000 * 86400 * 30}).json({success: true});
         }else{
             res.status(200).json({success:false})
         }
@@ -46,17 +47,13 @@ exports.newUser = (req, res, next) => {
     });
 };
 
-exports.verifyLogin = (req, res) =>
+exports.verifyLogin = (req, res, next) =>
 {
-  var cookie = req.cookies.sessionCookie;
-  
-  if(!verifyToken(cookie)){
+  var cookie = req.cookies.jwt || null;
+  if(cookie==null || !verifyToken(cookie) ){
     const status = 401
     const message = 'Unauthorized'
     return res.status(status).json({ status, message })
   }
-  
-  res.status(200).send();
-  console.log(cookie);
-
+  return next();
 };

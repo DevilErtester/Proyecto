@@ -1,10 +1,20 @@
-module.exports = app => {
-    const ejemplo = require("../controllers/ejemplo.controller.js");
 
-    var router = require("express").Router();
+const router = require('express').Router();
+const ejemplo = require("../controllers/ejemplo.controller.js");
+const Login = require("../controllers/login.controller.js");
 
-    router.post("/", ejemplo.ChangeMsg);
+const authenticateRequest = (req, res, next) => {
+    console.info('Authenticating request...');
+
+    req.authorized = true;
 
 
-    app.use('/api/ejemplo', router);
-};
+    return next();
+
+}
+
+
+router.use('*', Login.verifyLogin);
+router.post("/ejemplo", ejemplo.ChangeMsg);
+
+module.exports = router;
