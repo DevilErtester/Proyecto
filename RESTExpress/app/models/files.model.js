@@ -9,7 +9,7 @@ module.exports = (sequelize, Sequelize) => {
       primaryKey: true
     },
     OwnerId: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
     }
   });
   return Files;

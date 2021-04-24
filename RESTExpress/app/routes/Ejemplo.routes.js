@@ -4,7 +4,7 @@ const ejemplo = require("../controllers/ejemplo.controller.js");
 const Login = require("../controllers/login.controller.js");
 
 
-router.use('*', Login.verifyLogin);
+
 router.post("/ejemplo", ejemplo.ChangeMsg);
 
 module.exports = router;

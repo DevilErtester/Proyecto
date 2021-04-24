@@ -49,7 +49,11 @@ const loginRouter = require("./app/routes/login.routes.js");
 const ejemploRouter = require("./app/routes/Ejemplo.routes.js");
 const filesRouter = require("./app/routes/fileUpload.routes.js");
 
+const checklogin = require("./app/controllers/login.controller.js").verifyLogin;
+
+
 app.use('/api', loginRouter);
+app.use('*', checklogin);
 app.use('/api', ejemploRouter);
 app.use('/api', filesRouter);
 
