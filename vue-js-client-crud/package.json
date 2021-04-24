@@ -1,5 +1,6 @@
 {
   "name": "vue-js-client-crud",
+  "author": "Mario Chaves Santisteban",
   "version": "0.1.0",
   "private": true,
   "scripts": {
