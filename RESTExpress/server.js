@@ -48,21 +48,19 @@ app.use(morgan('dev'));
 const loginRouter = require("./app/routes/login.routes.js");
 const ejemploRouter = require("./app/routes/Ejemplo.routes.js");
 const filesRouter = require("./app/routes/fileUpload.routes.js");
+const signupRouter = require("./app/routes/signup.routes.js");
 
 const checklogin = require("./app/controllers/login.controller.js").verifyLogin;
 
 
 app.use('/api', loginRouter);
+app.use('/api', signupRouter);
 app.use('*', checklogin);
 app.use('/api', ejemploRouter);
 app.use('/api', filesRouter);
 
 
 require("./app/routes/tutorial.routes.js")(app);
-
-// // require("./app/routes/login.routes.js")(app);
-// require("./app/routes/signup.routes.js")(app);
-
 
 // set port, listen for requests
 

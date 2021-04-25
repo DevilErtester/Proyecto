@@ -2,7 +2,7 @@ const db = require("../models");
 const Login = db.users;
 const Op = db.Sequelize.Op;
 const jwt = require('jsonwebtoken');
-
+var fs = require("fs");
 
 
 function generateAccessToken(username) {
@@ -48,7 +48,12 @@ exports.newUser = (req, res, next) => {
     password: req.body.pass
   })
     .then(data => {
-      res.status(200).json({ success: true, data: data })
+      fs.mkdir("uploads/"+data.username,(err) => {
+        if (err) {
+            return console.error(err);
+        }
+      });
+      res.status(200).json({ success: true })
     })
     .catch(err => {
       res.status(200).json({

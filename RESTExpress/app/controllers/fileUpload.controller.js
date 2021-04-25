@@ -6,7 +6,7 @@ const fs = require('fs')
 
 
 
-exports.uploadAvatar = (req, res, next) => {
+exports.uploadFile = async (req, res, next) => {
     const user = jwt.decode(req.cookies.jwt)
     try {
         if (!req.files) {
@@ -15,25 +15,26 @@ exports.uploadAvatar = (req, res, next) => {
                 message: 'No file uploaded'
             });
         } else {
-            //Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
-            let avatar = req.files.avatar;
+            //Use the name of the input field to retrieve the uploaded file
+            const fileUploaded = req.files.file;
 
             //Use the mv() method to place the file in upload directory (i.e. "uploads")
-            avatar.mv('./uploads/' + avatar.name);
+            const dirUpload ='uploads/' + user.username + '/' + fileUploaded.name;
+            await fileUploaded.mv(dirUpload);
 
             //send response
             res.send({
                 status: true,
                 message: 'File is uploaded',
                 data: {
-                    name: avatar.name,
-                    mimetype: avatar.mimetype,
-                    size: avatar.size
+                    name: fileUploaded.name,
+                    mimetype: fileUploaded.mimetype,
+                    size: fileUploaded.size
                 }
             });
             //create a file JSON to assign each file uploaded to the user uploading them inside the DB
             const file = ({
-                fileName: avatar.name,
+                fileName: fileUploaded.name,
                 OwnerId: user.username
             })
             //upload the file name,and user who has uploaded it to the DB

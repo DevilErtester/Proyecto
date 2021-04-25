@@ -1,9 +1,17 @@
-module.exports = app => {
-    const Login = require("../controllers/login.controller.js");
+// module.exports = app => {
+//     const Login = require("../controllers/login.controller.js");
 
-    var router = require("express").Router();
+//     var router = require("express").Router();
 
-    router.post("/", Login.newUser);
+    
+//     app.use('/api/newUser', router);
+// };
+const router = require('express').Router();
 
-    app.use('/api/newUser', router);
-};
+const Login = require("../controllers/login.controller.js");
+
+
+router.post("/newUser", Login.newUser);
+
+
+module.exports = router;
