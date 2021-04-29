@@ -1,79 +1,64 @@
 <template>
-  <div id="app">
-    <div class="submit-form">
-      <div v-if="!submitted">
-        <div class="form-group">
-          <label for="user">user</label>
-          <input
-            type="text"
-            class="form-control"
-            id="username"
-            required
-            v-model="login.user"
-            name="username"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="pass">pass</label>
-          <input
-            type="password"
-            class="form-control"
-            id="pass"
-            required
-            v-model="login.pass"
-            name="pass"
-          />
-        </div>
-        {{ login.message }}
-        <button @click="clickMe" class="btn btn-success">Sign In</button>
-        <a></a>
-        <router-link to="/Signup" class="btn btn-success">Signup</router-link>
+  <div class="card mt-3">
+    <div class="card-body">
+      <div class="card-title">
+        <h3>Chat Group</h3>
+        <hr />
       </div>
+      <div class="card-body">
+        <div class="messages" v-for="(msg, index) in messages" :key="index">
+          <p>
+            <span class="font-weight-bold">{{ msg.user }}: </span
+            >{{ msg.message }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <form @submit.prevent="sendMessage">
+        <div class="gorm-group">
+          <label for="user">User:</label>
+          <input type="text" v-model="user" class="form-control" />
+        </div>
+        <div class="gorm-group pb-3">
+          <label for="message">Message:</label>
+          <input type="text" v-model="message" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-success">Send</button>
+      </form>
     </div>
   </div>
 </template>
 
 <script>
-import LoginDataService from "../services/LoginDataService";
-import router from '../router'
-import md5 from 'js-md5'
+import io from "socket.io-client";
 export default {
-  name: "Login",
   data() {
     return {
-      login: {
-        message: "",
-        pass: "",
-        user: "",
-      },
-      submitted: false,
+      user: "",
+      message: "",
+      messages: [],
+      socket: io("http://localhost:8080"),
     };
   },
   methods: {
-    clickMe() {
-      var data = {
-        user: this.login.user,
-        pass: md5(this.login.pass),
-      };
-      LoginDataService.clickMe(data).then(async (response) => {
-        if(response.data.success) {
+    sendMessage(e) {
+      e.preventDefault();
 
-          // Send a default GET request with credentials
-          await LoginDataService.getHello();
-
-          router.push("/");
-        }
-        else this.login.message="wrong password or username";
+      this.socket.emit("SEND_MESSAGE", {
+        user: this.user,
+        message: this.message,
       });
+      this.message = "";
     },
+  },
+  mounted() {
+    this.socket.on("MESSAGE", (data) => {
+      this.messages = [...this.messages, data];
+      // you can also do this.messages.push(data)
+    });
   },
 };
 </script>
 
-<style>
-.submit-form {
-  max-width: 300px;
-  margin: auto;
-}
-</style>
+<style></style>

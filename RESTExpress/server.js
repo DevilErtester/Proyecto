@@ -10,11 +10,7 @@ const _ = require('lodash');
 const app = express();
 
 
-//Socket IO init
-const http = require('http');
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
+
 
 
 // get config vars
@@ -31,6 +27,7 @@ db.sequelize.sync();
 
 var corsOptions = {
   origin: "http://localhost:8081",
+
   credentials: true
 };
 
@@ -59,6 +56,7 @@ const loginRouter = require("./app/routes/login.routes.js");
 const ejemploRouter = require("./app/routes/Ejemplo.routes.js");
 const filesRouter = require("./app/routes/fileUpload.routes.js");
 const signupRouter = require("./app/routes/signup.routes.js");
+const tutoRouter = require("./app/routes/tutorial.routes.js");
 
 const checkLogin = require("./app/controllers/login.controller.js").verifyLogin;
 
@@ -67,10 +65,8 @@ app.use('/api', loginRouter);
 app.use('/api', signupRouter);
 app.use('*', checkLogin);
 app.use('/api', ejemploRouter);
+app.use('/api', tutoRouter);
 app.use('/api', filesRouter);
-
-
-require("./app/routes/tutorial.routes.js")(app);
 
 // set port, listen for requests
 
@@ -81,6 +77,22 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500).send(err.message || 'Something broke!')
 })
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
+});
+
+
+const io = require('socket.io')(server, {
+  cors: {
+    origin: "http://localhost:8081",
+    methods: ["GET", "POST"]
+  }
+});
+
+io.on('connection', function (socket) {
+
+  console.log(socket.id)
+  socket.on('SEND_MESSAGE', function (data) {
+    io.emit('MESSAGE', data)
+  });
 });

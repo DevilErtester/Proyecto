@@ -16,7 +16,7 @@
           <router-link to="/login" class="nav-link">Login</router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/chat" class="nav-link">Login</router-link>
+          <router-link to="/chat" class="nav-link">chat</router-link>
         </li>
       </div>
     </nav>
