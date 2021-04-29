@@ -1,3 +1,4 @@
+// main express block init
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -6,6 +7,15 @@ const fileUpload = require('express-fileupload');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const _ = require('lodash');
+const app = express();
+
+
+//Socket IO init
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+
 
 // get config vars
 dotenv.config();
@@ -14,7 +24,7 @@ dotenv.config();
 console.log(process.env.TOKEN_SECRET);
 
 
-const app = express();
+
 
 const db = require("./app/models");
 db.sequelize.sync();
@@ -50,12 +60,12 @@ const ejemploRouter = require("./app/routes/Ejemplo.routes.js");
 const filesRouter = require("./app/routes/fileUpload.routes.js");
 const signupRouter = require("./app/routes/signup.routes.js");
 
-const checklogin = require("./app/controllers/login.controller.js").verifyLogin;
+const checkLogin = require("./app/controllers/login.controller.js").verifyLogin;
 
 
 app.use('/api', loginRouter);
 app.use('/api', signupRouter);
-app.use('*', checklogin);
+app.use('*', checkLogin);
 app.use('/api', ejemploRouter);
 app.use('/api', filesRouter);
 

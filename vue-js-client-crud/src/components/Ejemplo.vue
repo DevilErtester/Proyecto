@@ -8,23 +8,19 @@
 </template>
 
 <script>
-import EjemploDataService from "../services/EjemploDataService";
-// import LoginDataService from "../services/LoginDataService";
-// import router from '../router'
-
+import EjemploDataService from "../services/ChatDataService";
 
 export default {
-  
   name: "Ejemplo",
-  
+
   methods: {
     clickMe() {
       var data = {
         message: this.message,
-      }
-      EjemploDataService.clickMe(data).then((response=>{
-        this.message=response.data.message;
-      }));
+      };
+      EjemploDataService.clickMe(data).then((response) => {
+        this.message = response.data.message;
+      });
     },
   },
   data() {

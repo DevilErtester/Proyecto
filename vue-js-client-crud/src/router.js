@@ -28,6 +28,11 @@ export default new Router({
       component: () => import("./components/Login")
     },
     {
+      path: "/chat",
+      name: "Chat",
+      component: () => import("./components/Chat")
+    },
+    {
       path: "/verifyLogin",
       name: "verifyLogin",
       component: () => import("./components/Login")
