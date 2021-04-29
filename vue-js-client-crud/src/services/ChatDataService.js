@@ -1,7 +1,7 @@
 import http from "../http-common";
 
 class ChatDataService {
-    Chat() {
+    getThisUser() {
         return http.post(`/chat`);
     }
 }

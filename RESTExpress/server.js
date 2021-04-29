@@ -57,6 +57,7 @@ const ejemploRouter = require("./app/routes/Ejemplo.routes.js");
 const filesRouter = require("./app/routes/fileUpload.routes.js");
 const signupRouter = require("./app/routes/signup.routes.js");
 const tutoRouter = require("./app/routes/tutorial.routes.js");
+const chatRouter = require("./app/routes/Chat.routes.js");
 
 const checkLogin = require("./app/controllers/login.controller.js").verifyLogin;
 
@@ -67,6 +68,7 @@ app.use('*', checkLogin);
 app.use('/api', ejemploRouter);
 app.use('/api', tutoRouter);
 app.use('/api', filesRouter);
+app.use('/api', chatRouter);
 
 // set port, listen for requests
 

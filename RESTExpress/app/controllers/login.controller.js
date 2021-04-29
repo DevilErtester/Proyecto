@@ -15,7 +15,7 @@ function generateAccessToken(username) {
 function verifyToken(token) {
   return jwt.verify(token, process.env.TOKEN_SECRET)
 }
-exports.getUser = (req, res, next) => {
+exports.getUserId = (req, res, next) => {
   Login.findOne({
     where: {
       username: req.body.user,

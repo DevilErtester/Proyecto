@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import EjemploDataService from "../services/ChatDataService";
+import EjemploDataService from "../services/EjemploDataService";
 
 export default {
   name: "Ejemplo",

@@ -16,10 +16,7 @@
     </div>
     <div class="card-footer">
       <form @submit.prevent="sendMessage">
-        <div class="gorm-group">
-          <label for="user">User:</label>
-          <input type="text" v-model="user" class="form-control" />
-        </div>
+        
         <div class="gorm-group pb-3">
           <label for="message">Message:</label>
           <input type="text" v-model="message" class="form-control" />
@@ -32,6 +29,8 @@
 
 <script>
 import io from "socket.io-client";
+import ChatDataService from "../services/ChatDataService";
+
 export default {
   data() {
     return {
@@ -44,9 +43,10 @@ export default {
   methods: {
     sendMessage(e) {
       e.preventDefault();
-
+      const username = ChatDataService.getThisUser();
+      console.log(username)
       this.socket.emit("SEND_MESSAGE", {
-        user: this.user,
+        user: username,
         message: this.message,
       });
       this.message = "";
