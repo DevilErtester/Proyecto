@@ -26,7 +26,7 @@
           />
         </div>
         {{ login.message }}
-        <button @click="clickMe" class="btn btn-success">Sign In</button>
+        <button @click="login" class="btn btn-success">Sign In</button>
         <a></a>
         <router-link to="/Signup" class="btn btn-success">Signup</router-link>
       </div>
@@ -51,16 +51,14 @@ export default {
     };
   },
   methods: {
-    clickMe() {
+    login() {
       var data = {
         user: this.login.user,
         pass: md5(this.login.pass),
       };
       LoginDataService.clickMe(data).then(async (response) => {
         if (response.data.success) {
-          // Send a default GET request with credentials
-
-          router.push("/");
+          router.push("/chat");
         } else this.login.message = "wrong password or username";
       });
     },

@@ -2,7 +2,7 @@
   <div class="card mt-3">
     <div class="card-body">
       <div class="card-title">
-        <h3>Chat Group</h3>
+        <h3>Tristes Chat</h3>
         <hr />
       </div>
       <div class="card-body">
