@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 
-exports.getThisUser = (req, res) => {
+ exports.getThisUser = async (req, res) => {
     const user = jwt.decode(req.cookies.jwt)
-    return res.send(user.username)
+    return res.json({
+        username: user.username,
+    })
 }

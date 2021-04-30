@@ -34,7 +34,6 @@ import ChatDataService from "../services/ChatDataService";
 export default {
   data() {
     return {
-      user: "",
       message: "",
       messages: [],
       socket: io("http://localhost:8080"),
@@ -43,19 +42,19 @@ export default {
   methods: {
     sendMessage(e) {
       e.preventDefault();
-      const username = ChatDataService.getThisUser();
-      console.log(username)
-      this.socket.emit("SEND_MESSAGE", {
-        user: username,
-        message: this.message,
+      ChatDataService.getThisUser().then((response) => {
+        const username = response.data.username;
+        this.socket.emit("SEND_MESSAGE", {
+          user: username,
+          message: this.message,
+        });
+        this.message=""
       });
-      this.message = "";
     },
   },
   mounted() {
     this.socket.on("MESSAGE", (data) => {
-      this.messages = [...this.messages, data];
-      // you can also do this.messages.push(data)
+      this.messages.push(data)
     });
   },
 };

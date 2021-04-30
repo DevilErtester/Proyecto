@@ -59,7 +59,6 @@ export default {
       LoginDataService.clickMe(data).then(async (response) => {
         if (response.data.success) {
           // Send a default GET request with credentials
-          await LoginDataService.getHello();
 
           router.push("/");
         } else this.login.message = "wrong password or username";
