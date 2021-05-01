@@ -26,7 +26,7 @@
           />
         </div>
         {{ login.message }}
-        <button @click="login" class="btn btn-success">Sign In</button>
+        <button @click="loginMe" class="btn btn-success">Sign In</button>
         <a></a>
         <router-link to="/Signup" class="btn btn-success">Signup</router-link>
       </div>
@@ -51,7 +51,7 @@ export default {
     };
   },
   methods: {
-    login() {
+    loginMe() {
       var data = {
         user: this.login.user,
         pass: md5(this.login.pass),

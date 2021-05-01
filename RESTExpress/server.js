@@ -64,7 +64,6 @@ const checkLogin = require("./app/controllers/login.controller.js").verifyLogin;
 
 app.use('/api', loginRouter);
 app.use('/api', signupRouter);
-app.use('*', checkLogin);
 app.use('/api', ejemploRouter);
 app.use('/api', tutoRouter);
 app.use('/api', filesRouter);
@@ -93,7 +92,6 @@ const io = require('socket.io')(server, {
 
 io.on('connection', function (socket) {
 
-  console.log(socket.id)
   socket.on('SEND_MESSAGE', function (data) {
     io.emit('MESSAGE', data)
   });

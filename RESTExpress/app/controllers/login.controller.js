@@ -71,5 +71,5 @@ exports.verifyLogin = (req, res, next) => {
     const message = 'Unauthorized'
     return res.status(status).json({ status, message })
   }
-  return next();
+  return res.send();
 };
