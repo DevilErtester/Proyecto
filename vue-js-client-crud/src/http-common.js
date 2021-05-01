@@ -1,5 +1,9 @@
 import axios from "axios";
+// import router from './router.js'
+// axios.defaults.withCredentials  =true; // set cross domain and access permission to allow cookie information to be carried across domains
 
+// axios.defaults.headers.post['Content-Type'] = 'application/json'
+// axios.defaults.headers.put['Content-Type'] = 'application/json'
 export default axios.create({
   baseURL: "http://localhost:8080/api",
   headers: {
@@ -7,17 +11,31 @@ export default axios.create({
   },
   withCredentials: true,
 });
-// axios.interceptors.response.use(function (response) {
-//   // Any status code that lie within the range of 2xx cause this function to trigger
-//   // Do something with response data
-//   console.log(response.data)
-//   return response;
-// }, function (error) {
-//   // Any status codes that falls outside the range of 2xx cause this function to trigger
-//   // Do something with response error
-//   console.log(error)
-//   return Promise.reject(error);
-// })
-// export default function(){
-//   return axios
-// }
+
+// axios.interceptors.request.use(
+//   config => {
+//     return config;
+//   },
+//   error => {
+//     return Promise.reject(error);
+//   }
+// );
+// axios.interceptors.response.use(
+//   response => {
+//     //Not logged in or session expired
+//     if ('401' === response.data.code) {
+//       //Redirect to login page
+//       router.replace({
+//         path: '/login',
+//         query: {redirect: router.currentRoute.fullPath}
+//       })
+//     }
+//     return response;
+//   },
+//   error => {
+//     if (500 === error.response.status) {
+//       //Server exception  
+//     }
+//     return  Promise.reject (error) // returns the error information returned by the interface
+//   }
+// );
