@@ -16,6 +16,14 @@ const router = new Router({
       }
     },
     {
+      path: "/editor",
+      name: "Text Editor",
+      component: () => import("./components/TextEditor"),
+      meta: {
+        auth: true,
+      }
+    },
+    {
       path: "/tutorials/:id",
       name: "tutorial-details",
       component: () => import("./components/Tutorial"),
@@ -68,9 +76,9 @@ const router = new Router({
 
 //Route interceptor
 router.beforeEach(async (to, from, next) => {
-  if ( to.matched.some (record =>  record.meta.auth ) &&  to.meta.auth ){// determine whether the route needs login permission
-    LoginDataService.verifyLogin().then(response =>{
-      if (response.status==200) {// gets whether the current token exists
+  if (to.matched.some(record => record.meta.auth) && to.meta.auth) {// determine whether the route needs login permission
+    LoginDataService.verifyLogin().then(response => {
+      if (response.status == 200) {// gets whether the current token exists
         next()
       } else {
         //There is no token, re authentication is required
@@ -84,7 +92,7 @@ router.beforeEach(async (to, from, next) => {
 
     })
   }
-  else{
+  else {
     next();
   }
 });

@@ -18,6 +18,9 @@
         <li class="nav-item">
           <router-link to="/chat" class="nav-link">chat</router-link>
         </li>
+        <li class="nav-item">
+          <router-link to="/editor" class="nav-link">Froala</router-link>
+        </li>
       </div>
     </nav>
 
