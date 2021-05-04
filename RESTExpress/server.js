@@ -95,4 +95,7 @@ io.on('connection', function (socket) {
   socket.on('SEND_MESSAGE', function (data) {
     io.emit('MESSAGE', data)
   });
+  socket.onAny((event, ...args) => {
+    console.log(event, args);
+  });
 });

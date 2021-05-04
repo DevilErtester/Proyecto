@@ -1,5 +1,5 @@
 <template>
-  <froala :tag="'textarea'" :config="config" v-model="model"></froala>
+  <froala :config="config"></froala>
 </template>
 
 <script>
@@ -13,12 +13,11 @@ export default {
         fullPage: true,
         charCounterCount: true,
         events: {
-          "froalaEditor.initialized": function() {
-            console.log("initialized");
-          },
+          // "froalaEditor.initialized": function() {
+          //   console.log("initialized");
+          // },
         },
       },
-
       model: "",
     };
   },
