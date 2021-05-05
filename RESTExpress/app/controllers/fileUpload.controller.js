@@ -55,16 +55,15 @@ exports.getAllFiles = async (req,res,next) => {
             }
         }
     })
-    console.log(allFiles)
     res.send(allFiles);
 }
-exports.deleteFilebyName = async (req,res) =>{
+exports.deleteFilebyName = async (req,res,next) =>{
     const user = jwt.decode(req.cookies.jwt).username
+    console.log(req.params)
     if (!req.params.filename) {
         console.log("No file received");
         message = "Error! in file delete.";
         return res.status(500).json('error in delete');
-    
       } else {
         console.log('file received');
         try {
@@ -76,6 +75,7 @@ exports.deleteFilebyName = async (req,res) =>{
                     OwnerId:user
                 }
             })
+            next();
             return res.status(200).send('Successfully! file has been Deleted');
           } catch (err) {
             // handle the error

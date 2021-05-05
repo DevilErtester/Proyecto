@@ -78,7 +78,7 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500).send(err.message || 'Something broke!')
 })
 
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT | 8080, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 

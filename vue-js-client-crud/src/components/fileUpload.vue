@@ -1,10 +1,10 @@
 <template>
-  <div id="app" v-cloak @drop.prevent="addFile" @dragover.prevent> 
+  <div id="app" v-cloak @drop.prevent="addFile" @dragover.prevent class="container"> 
     <form ref="fileform">
       <span class="drop-files">Drop the files here!</span>
       <ul>
         <li v-for="(file,index) in files" :key="index">
-          {{ file.name }} ({{ file.size | kb }} kb) <!-- <button @click="removeFile(file)" title="Remove">X</button> -->
+          {{ file.name }} ({{ file.size |kb}}) <a class="btn" @click="removeFile(file.name,index)" title="Remove">X</a>
         </li>
       </ul>
     </form>
@@ -22,12 +22,24 @@ export default {
       files:[]
     };
   },
+  filters:{
+    kb: function(value){
+      if (value>1024000){
+        value = Math.floor(value/1024000)+" mb";
+      }else if(value>1024){
+        value = Math.floor(value/1024)+"kb"
+      }else{
+        value = value+"b"
+      }
+      return value
+    },
+  },
   mounted(){
     FilesDataService.getAllFiles().then(response =>{
       const fileArray = response.data
       fileArray.forEach((file)=>{
         this.files.push(file)
-        console.log(file)
+        
       })
     })
     /*
@@ -66,7 +78,6 @@ export default {
        let formData = new FormData();
         for( let i = 0; i < e.dataTransfer.files.length; i++ ){
           this.files.push( e.dataTransfer.files[i] );
-          console.log(e.dataTransfer.files[i])
           formData.append('file', e.dataTransfer.files[i]);
           FilesDataService.fileUpload(formData);
         }
@@ -74,6 +85,12 @@ export default {
     }
   },
   methods: {
+    removeFile(file,key){
+      console.log(file)
+      this.files.splice( key, 1 );
+      FilesDataService.deleteFilebyName(file)
+      
+    },
     determineDragAndDropCapable(){
       /*
         Create a test element to see if certain events
@@ -99,6 +116,7 @@ export default {
 </script>
 
 <style>
+
 div.file-listing{
   width: 400px;
   margin: auto;
