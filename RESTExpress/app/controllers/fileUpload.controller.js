@@ -34,8 +34,10 @@ exports.uploadFile = async (req, res, next) => {
             });
             //create a file JSON to assign each file uploaded to the user uploading them inside the DB
             const file = ({
-                fileName: fileUploaded.name,
-                OwnerId: user.username
+                name: fileUploaded.name,
+                OwnerId: user.username,
+                size: fileUploaded.size,
+                type: fileUploaded.mimetype
             })
             //upload the file name,and user who has uploaded it to the DB
             files.create(file);
@@ -57,6 +59,7 @@ exports.getAllFiles = async (req,res,next) => {
     res.send(allFiles);
 }
 exports.deleteFilebyName = async (req,res) =>{
+    const user = jwt.decode(req.cookies.jwt).username
     if (!req.params.filename) {
         console.log("No file received");
         message = "Error! in file delete.";
@@ -64,10 +67,15 @@ exports.deleteFilebyName = async (req,res) =>{
     
       } else {
         console.log('file received');
-        console.log(req.params.filename);
         try {
-            fs.unlinkSync('uploads/'+req.params.filename);
+            fs.unlinkSync('uploads/'+user+'/'+req.params.filename);
             console.log('successfully deleted /tmp/hello');
+            files.destroy({
+                where: {
+                    name:req.params.filename,
+                    OwnerId:user
+                }
+            })
             return res.status(200).send('Successfully! file has been Deleted');
           } catch (err) {
             // handle the error

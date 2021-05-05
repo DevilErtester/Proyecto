@@ -69,6 +69,14 @@ const router = new Router({
       meta: {
         auth: true,
       }
+    },
+    {
+      path: "/files",
+      name: "files",
+      component: () => import("./components/fileUpload"),
+      meta: {
+        auth: true,
+      }
     }
 
   ]

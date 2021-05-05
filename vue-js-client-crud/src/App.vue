@@ -21,6 +21,9 @@
         <li class="nav-item">
           <router-link to="/editor" class="nav-link">Froala</router-link>
         </li>
+         <li class="nav-item">
+          <router-link to="/files" class="nav-link">Files</router-link>
+        </li>
       </div>
     </nav>
 
