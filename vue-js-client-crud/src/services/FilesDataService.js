@@ -16,6 +16,9 @@ class FileDataService {
     deleteFilebyName(filename){
         return http.delete(`/deleteFilebyName/${filename}`)
     }
+    downloadFile(filename){
+        return http.get(`/downloadFile/${filename}`)
+    }
 
 }
 

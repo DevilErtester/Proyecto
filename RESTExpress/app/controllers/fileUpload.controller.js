@@ -46,6 +46,21 @@ exports.uploadFile = async (req, res, next) => {
         res.status(500).send(err);
     }
 }
+exports.downloadFile = async (req, res, next)=>{
+    const user = jwt.decode(req.cookies.jwt).username
+    if (!req.params.filename) {
+        console.log("No file received");
+        return res.status(500).json('error in download');
+    } else {
+        try {
+            var file = __dirname+"/../../uploads/"+user+"/"+req.params.filename; // Or format the path using the `id` rest param
+            res.download(file);    
+        } catch (err) {
+            // handle the error
+            return res.status(400).send(err);
+        }
+    }
+}
 exports.getAllFiles = async (req,res,next) => {
     const user = jwt.decode(req.cookies.jwt).username
     const allFiles = await files.findAll({
@@ -59,28 +74,26 @@ exports.getAllFiles = async (req,res,next) => {
 }
 exports.deleteFilebyName = async (req,res,next) =>{
     const user = jwt.decode(req.cookies.jwt).username
-    console.log(req.params)
     if (!req.params.filename) {
         console.log("No file received");
-        message = "Error! in file delete.";
         return res.status(500).json('error in delete');
-      } else {
-        console.log('file received');
-        try {
-            fs.unlinkSync('uploads/'+user+'/'+req.params.filename);
-            console.log('successfully deleted /tmp/hello');
-            files.destroy({
-                where: {
-                    name:req.params.filename,
-                    OwnerId:user
-                }
-            })
-            next();
-            return res.status(200).send('Successfully! file has been Deleted');
-          } catch (err) {
-            // handle the error
-            return res.status(400).send(err);
-          }
-        
-      }
+    } else {
+    console.log('file received');
+    try {
+        fs.unlinkSync('uploads/'+user+'/'+req.params.filename);
+        console.log('successfully deleted /tmp/hello');
+        files.destroy({
+            where: {
+                name:req.params.filename,
+                OwnerId:user
+            }
+        })
+        next();
+        return res.status(200).send('Successfully! file has been Deleted');
+        } catch (err) {
+        // handle the error
+        return res.status(400).send(err);
+        }
+    
+    }
 }

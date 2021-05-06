@@ -4,7 +4,7 @@
       <span class="drop-files">Drop the files here!</span>
       <ul>
         <li v-for="(file,index) in files" :key="index">
-          {{ file.name }} ({{ file.size |kb}}) <a class="btn" @click="removeFile(file.name,index)" title="Remove">X</a>
+          {{ file.name }} ({{ file.size |kb}}) <a class="btn" @click="removeFile(file.name,index)" title="Remove">X</a><a class="btn" @click="downloadFile(file.name)" title="Download">></a>
         </li>
       </ul>
     </form>
@@ -90,6 +90,17 @@ export default {
       this.files.splice( key, 1 );
       FilesDataService.deleteFilebyName(file)
       
+    },
+    downloadFile(file){
+      FilesDataService.downloadFile(file).then((response) => {
+        const fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        const fileLink = document.createElement('a');
+        console.log(response.data)
+        fileLink.href = fileURL;
+        fileLink.setAttribute('download', file);
+        document.body.appendChild(fileLink);
+        fileLink.click();
+      });
     },
     determineDragAndDropCapable(){
       /*
