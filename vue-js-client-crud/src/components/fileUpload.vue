@@ -7,7 +7,7 @@
     class="container"
   >
     <div class="container-fluid">
-      <div class="col-md-2">
+      <div class="col-md-10">
         <form ref="fileform">
           <span class="drop-files">Drop the files here!</span>
           <div class="grid-container">
@@ -207,12 +207,13 @@ export default {
 <style>
 .file {
   font-size: 0.8em;
-  width: 100px;
+  width: 150px;
+  height: 150px;
 }
 .grid-container {
   display: grid;
-  grid-template-columns: auto auto auto;
-  grid-template-rows: auto auto;
+  grid-template-columns: auto auto auto auto auto;
+  grid-template-rows: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;
   grid-gap: 10px;
   padding: 10px;
 }
