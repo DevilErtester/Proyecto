@@ -2,11 +2,13 @@
   <div id="app" v-cloak @drop.prevent="addFile" @dragover.prevent class="container"> 
     <form ref="fileform">
       <span class="drop-files">Drop the files here!</span>
-      <ul>
-        <li v-for="(file,index) in files" :key="index">
-          {{ file.name }} ({{ file.size |kb}}) <a class="btn" @click="removeFile(file.name,index)" title="Remove">X</a><a class="btn" @click="downloadFile(file.name)" title="Download">></a>
-        </li>
-      </ul>
+      <div class="grid-container">
+        <div v-for="(file,index) in files" :key="index">
+          {{ file.name }} ({{ file.size |kb}}) 
+          <a class="btn" @click="removeFile(file.name,index)" title="Remove"><i class="fas fa-trash-alt"></i></a>
+          <a class="btn" @click="downloadFile(file.name)" title="Download"><i class="fas fa-download"></i></a>
+        </div>
+      </div>
     </form>
     <!-- <button :disabled="uploadDisabled" @click="upload">Upload</button> -->
   </div>
@@ -39,7 +41,6 @@ export default {
       const fileArray = response.data
       fileArray.forEach((file)=>{
         this.files.push(file)
-        
       })
     })
     /*
@@ -127,15 +128,14 @@ export default {
 </script>
 
 <style>
-
-div.file-listing{
-  width: 400px;
-  margin: auto;
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto;
+  grid-gap: 10px;
   padding: 10px;
-  border-bottom: 1px solid #ddd;
 }
 
-div.file-listing img{
-  height: 100px;
-}
+
+
 </style>
