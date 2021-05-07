@@ -1,5 +1,7 @@
 <template>
-  <froala :config="config"></froala>
+  <div id="app">
+    <froala :tag="'textarea'" :config="config" v-model="model"></froala>
+  </div>
 </template>
 
 <script>
