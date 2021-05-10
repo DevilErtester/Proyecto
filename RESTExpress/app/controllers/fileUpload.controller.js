@@ -2,9 +2,26 @@ const db = require("../models");
 const files = db.files;
 const Op = db.Sequelize.Op;
 const jwt = require('jsonwebtoken');
-const fs = require('fs')
+const fs = require('fs');
+const { timeStamp } = require("console");
 
 
+// exports.uploadFile = async (req, res, next) => {
+//     const file = req.files.file; // We get the file in req.file
+//     console.log(file)
+//     if (!file) { // in case we do not get a file we return
+//         const error = new Error("Please upload a file");
+//         error.httpStatusCode = 400;
+//         return next(error);
+//     }
+//     const multerText = Buffer.from(file.data.buffer).toString("utf-8"); // this reads and converts the contents of the text file into string
+
+//     const result = { // the final object which will hold the content of the file under fileText key.
+//         fileText: multerText,
+//     };
+
+//     res.send(result);
+// }
 
 exports.uploadFile = async (req, res, next) => {
     const user = jwt.decode(req.cookies.jwt)
@@ -19,7 +36,8 @@ exports.uploadFile = async (req, res, next) => {
             const fileUploaded = req.files.file;
 
             //Use the mv() method to place the file in upload directory (i.e. "uploads")
-            const dirUpload = 'uploads/' + user.username + '/' + fileUploaded.name;
+            const date = Date.now();
+            const dirUpload = 'uploads/' + user.username + '/' + date +"_"+fileUploaded.name;
             await fileUploaded.mv(dirUpload);
 
             //send response
@@ -34,7 +52,7 @@ exports.uploadFile = async (req, res, next) => {
             });
             //create a file JSON to assign each file uploaded to the user uploading them inside the DB
             const file = ({
-                name: fileUploaded.name,
+                name: date + "_" + fileUploaded.name,
                 OwnerId: user.username,
                 size: fileUploaded.size,
                 type: fileUploaded.mimetype

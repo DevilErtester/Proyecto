@@ -10,6 +10,9 @@
       <div class="col-md-10">
         <form ref="fileform">
           <span class="drop-files">Drop the files here!</span>
+          <div v-if="progress" class="progess-bar" :style="{'width': progress}">       
+            {{progress}}    
+          </div>
           <div class="grid-container">
             <div
               class="list-group-item"
@@ -57,6 +60,7 @@ export default {
   name: "FileUpload",
   data() {
     return {
+      progress:1,
       dragAndDropCapable: false,
       files: [],
       currentIndex: -1,
@@ -87,9 +91,8 @@ export default {
     },
     downloadFile(file) {
       FilesDataService.downloadFile(file).then((response) => {
-        const fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        const fileURL = window.URL.createObjectURL(response.data);
         const fileLink = document.createElement("a");
-        console.log(response.data);
         fileLink.href = fileURL;
         fileLink.setAttribute("download", file);
         document.body.appendChild(fileLink);
@@ -98,7 +101,7 @@ export default {
     },
     editFile(file) {
       FilesDataService.downloadFile(file).then((response) => {
-        this.model = response.data;
+        this.model = response.data.toString('utf8');
       });
     },
     determineDragAndDropCapable() {
@@ -195,7 +198,12 @@ export default {
           for (let i = 0; i < e.dataTransfer.files.length; i++) {
             this.files.push(e.dataTransfer.files[i]);
             formData.append("file", e.dataTransfer.files[i]);
-            FilesDataService.fileUpload(formData);
+            FilesDataService.fileUpload(formData, {
+              onUploadProgress: ProgressEvent => {            
+                let progress = 
+                Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100)+"%";this.progress = progress;          
+              }
+            });
           }
         }.bind(this)
       );
