@@ -34,7 +34,7 @@
         </form>
       </div>
       <div class="col-md-6">
-        <div v-if="currentFile">
+        <div v-if="currentFile.type == 'text/plain'">
           <h4>File</h4>
           <div>
             <label><strong>File Name:</strong></label> {{ currentFile.name }}
@@ -60,7 +60,9 @@ export default {
       dragAndDropCapable: false,
       files: [],
       currentIndex: -1,
-      currentFile: null,
+      currentFile: {
+        type: null,
+      },
       model: "",
       config: {
         fullPage: true,
@@ -77,13 +79,11 @@ export default {
     setActiveFile(file, key) {
       this.currentFile = file;
       this.currentIndex = key;
-      console.log(file, key);
+      // console.log(file, key);
       if (file.type == "text/plain") {
         this.editFile(file.name);
-      } else if (file.type === "image/") {
-        console.log("image");
-      } else {
-        this.currentFile = null;
+      } else if (file.type === "image/png") {
+        console.log(file);
       }
     },
     removeFile(file, key) {
@@ -93,7 +93,7 @@ export default {
     },
     downloadFile(file) {
       FilesDataService.downloadFile(file).then((response) => {
-        const fileURL = window.URL.createObjectURL(response.data);
+        const fileURL = window.URL.createObjectURL(new Blob([response.data]));
         const fileLink = document.createElement("a");
         fileLink.href = fileURL;
         fileLink.setAttribute("download", file);
