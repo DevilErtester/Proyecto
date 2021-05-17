@@ -93,7 +93,7 @@ export default {
     },
     downloadFile(file) {
       FilesDataService.downloadFile(file).then((response) => {
-        const fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        const fileURL = window.URL.createObjectURL(new Blob([response.data]));//Tengo que encontrar como declarar el blob de imagenes
         const fileLink = document.createElement("a");
         fileLink.href = fileURL;
         fileLink.setAttribute("download", file);
