@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import LoginDataService from "./services/LoginDataService"
+// import LoginDataService from "./services/LoginDataService" old auth system
 Vue.use(Router);
 
 const router = new Router({
@@ -52,11 +52,11 @@ const router = new Router({
         auth: true,
       }
     },
-    {
-      path: "/verifyLogin",
-      name: "verifyLogin",
-      component: () => import("./components/Login")
-    },
+    // {
+    //   path: "/verifyLogin",
+    //   name: "verifyLogin",
+    //   component: () => import("./components/Login") old auth system
+    // },
     {
       path: "/Signup",
       name: "Signup",
@@ -82,26 +82,26 @@ const router = new Router({
   ]
 });
 
-//Route interceptor
-router.beforeEach(async (to, from, next) => {
-  if (to.matched.some(record => record.meta.auth) && to.meta.auth) {// determine whether the route needs login permission
-    LoginDataService.verifyLogin().then(response => {
-      if (response.status == 200) {// gets whether the current token exists
-        next()
-      } else {
-        //There is no token, re authentication is required
-        next({
-          path: '/login',
-          query: {
-            redirect: to.fullPath
-          }
-        })
-      }
+//Route interceptor old auth system
+// router.beforeEach(async (to, from, next) => {
+//   if (to.matched.some(record => record.meta.auth) && to.meta.auth) {// determine whether the route needs login permission
+//     LoginDataService.verifyLogin().then(response => {
+//       if (response.status == 200) {// gets whether the current token exists
+//         next()
+//       } else {
+//         //There is no token, re authentication is required
+//         next({
+//           path: '/login',
+//           query: {
+//             redirect: to.fullPath
+//           }
+//         })
+//       }
 
-    })
-  }
-  else {
-    next();
-  }
-});
+//     })
+//   }
+//   else {
+//     next();
+//   }
+// });
 export default router

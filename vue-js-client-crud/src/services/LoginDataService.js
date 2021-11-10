@@ -7,9 +7,9 @@ class LoginDataService {
     newUser(data) {
         return http.post(`/newUser`, data);
     }
-    verifyLogin(){
-        return http.post(`/verifyLogin`);
-    }
+    // verifyLogin(){
+    //     return http.post(`/verifyLogin`);
+    // }
 
 
 }

@@ -24,7 +24,7 @@ axiosInstance.interceptors.response.use(
   response => {
     //Not logged in or session expired
     if (401 === response.status) {
-      console.log("a")
+      console.log("aqq")
       //Redirect to login page
       router.replace({
         path: '/login',

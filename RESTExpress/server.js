@@ -61,7 +61,7 @@ const signupRouter = require("./app/routes/signup.routes.js");
 const tutoRouter = require("./app/routes/tutorial.routes.js");
 const chatRouter = require("./app/routes/Chat.routes.js");
 
-const checkLogin = require("./app/controllers/login.controller.js").verifyLogin;
+// const checkLogin = require("./app/controllers/login.controller.js").verifyLogin;
 
 
 app.use('/api', loginRouter);

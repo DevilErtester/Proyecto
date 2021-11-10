@@ -48,9 +48,9 @@ exports.newUser = (req, res, next) => {
     password: req.body.pass
   })
     .then(data => {
-      fs.mkdir("uploads/"+data.username,(err) => {
+      fs.mkdir("uploads/" + data.username, (err) => {
         if (err) {
-            return console.error(err);
+          return console.error(err);
         }
       });
       res.status(200).json({ success: true })
@@ -64,12 +64,12 @@ exports.newUser = (req, res, next) => {
     });
 };
 
-exports.verifyLogin = (req, res, next) => {
-  var cookie = req.cookies.jwt || null;
-  if (cookie == null || !verifyToken(cookie)) {
-    const status = 401
-    const message = 'Unauthorized'
-    return res.status(status).json({ status, message })
-  }
-  return res.send();
-};
+// exports.verifyLogin = (req, res, next) => { old auth system
+//   var cookie = req.cookies.jwt || null;
+//   if (cookie == null || !verifyToken(cookie)) {
+//     const status = 401
+//     const message = 'Unauthorized'
+//     return res.status(status).json({ status, message })
+//   }
+//   return res.send();
+// };
